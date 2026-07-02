@@ -1,6 +1,5 @@
 import rclpy
 from rclpy.node import Node
-from rcl_interfaces.msg import ParameterDescriptor, ParameterType
 from rcl_interfaces.msg import SetParametersResult
 
 class HelloWorldNode(Node):
@@ -8,6 +7,7 @@ class HelloWorldNode(Node):
         super().__init__('intro_params_node')
 
         # 1. Declare parameters with default values
+        # (These defaults are overridden if parameters are passed via the command line)
         self.declare_parameter('message', 'Hello World to test Params')
         self.declare_parameter('frequency', 1.0) # Frequency in Hz
 
@@ -28,7 +28,7 @@ class HelloWorldNode(Node):
 
     def timer_callback(self):
         # Always prints the current message variable
-        self.message = self.get_parameter('message').value
+        # self.message = self.get_parameter('message').value
         self.get_logger().info(self.message)
 
     def parameter_callback(self, params):
@@ -57,7 +57,7 @@ class HelloWorldNode(Node):
         return SetParametersResult(successful=True)
 
 def main(args=None):
-    rclpy.init(args=args)
+    rclpy.init(args=args) # This parses any command line arguments passed to the ROS2 ecosystem
     node = HelloWorldNode()
     try:
         rclpy.spin(node)
