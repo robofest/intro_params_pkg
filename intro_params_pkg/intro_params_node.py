@@ -14,7 +14,15 @@ class HelloWorldNode(Node):
         # 2. Read initial values
         self.message = self.get_parameter('message').value
         frequency = self.get_parameter('frequency').value
-       
+        # --- Guard against zero or negative frequencies at startup ---
+        if frequency <= 0.0:
+            self.get_logger().fatal(
+                f"Invalid frequency configuration: {frequency} Hz. "
+                "Frequency must be strictly greater than 0.0. Terminating node!"
+            )
+            # Raising an exception here cleanly halts initialization
+            raise RuntimeError(f"Invalid initial frequency: {frequency}")
+        
         # Calculate initial period
         self.timer_period = 1.0 / frequency
 
