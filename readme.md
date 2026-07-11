@@ -12,3 +12,7 @@ $ ros2 run intro_params_pkg intro_params_node_exe --ros-args -p message:="Custop
 
 ## Test 3: Provide parameters via rqt/dyn reconfigure GUI
 ```bash
+$ rqt
+```
+
+plugin => Configuration => Dynamic Reconfigure
